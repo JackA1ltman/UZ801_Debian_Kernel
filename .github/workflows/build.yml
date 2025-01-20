@@ -135,7 +135,7 @@ jobs:
                     --tags_offset 0x01e00000 \
                     --pagesize 2048 \
                     --second_offset 0x00f00000 \
-                    --ramdisk initrd.img \
+                    --ramdisk ../debian_kernel/initrd.img \
                     --cmdline "earlycon console=tty0 console=ttyMSM0,115200 root=UUID=${{ env.ROOTFS_UUID }} rw loglevel=7"\
                     --kernel ../debian_kernel/kernel-dtb -o ../boot.img
 
