@@ -96,7 +96,7 @@ jobs:
         run: |
            cd $GITHUB_WORKSPACE/kernel_workflow
            sudo apt-get install debootstrap qemu-user-static binfmt-support
-           sudo debootstrap --arch arm64 --foreign jammy rootfs https://ports.ubuntu.com
+           sudo debootstrap --arch arm64 --foreign trixie rootfs 	https://ftp.us.debian.org/debian
            
            sudo cp -a /usr/bin/qemu-aarch64-static rootfs/usr/bin/qemu-aarch64-static
            sudo cp ${{ env.HEADER }} rootfs/root/
