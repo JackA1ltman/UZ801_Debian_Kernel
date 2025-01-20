@@ -77,7 +77,7 @@ jobs:
           make  CC="ccache aarch64-linux-gnu-gcc" CXX="ccache aarch64-linux-gnu-g++" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- deb-pkg -j$(nproc --all)
           cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/msm8916-yiming-uz801v3.dtb > kernel-dtb
           sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules_install -j$(nproc --all)
-          MKINIT_FOLDER=echo $(ls -d /lib/modules/*-msm8916-* | xargs -n 1 basename)
+          MKINIT_FOLDER=$(ls -d /lib/modules/*-msm8916-* | xargs -n 1 basename)
           sudo mkinitramfs $MKINIT_FOLDER -o ./initrd.img
 
       - name: Check compiled files
