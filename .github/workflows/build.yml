@@ -44,6 +44,7 @@ jobs:
           sudo apt-get install git ccache automake flex lzop bison gperf build-essential zip curl zlib1g-dev g++-multilib libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev liblz4-tool make optipng maven libssl-dev pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl bc libc6-dev-i386 lib32ncurses5-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc unzip device-tree-compiler python2 python3
           sudo apt-get install libssl-dev:arm64 gcc-aarch64-linux-gnu g++-aarch64-linux-gnu debhelper-compat libelf-dev:native
           sudo apt-get install android-libbase android-liblog android-libsparse android-sdk-libsparse-utils img2simg initramfs-tools
+          sudo apt-get install debian-archive-keyring
           mkdir -p $GITHUB_WORKSPACE/kernel_workflow
 
       - name: Set swap to 10G
@@ -76,7 +77,8 @@ jobs:
           make  CC="ccache aarch64-linux-gnu-gcc" CXX="ccache aarch64-linux-gnu-g++" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- deb-pkg -j$(nproc --all)
           cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/msm8916-yiming-uz801v3.dtb > kernel-dtb
           sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules_install -j$(nproc --all)
-          sudo mkinitramfs 6.12.1-msm8916-g1728ab7f6075-dirty -o ./initrd.img
+          MKINIT_FOLDER=echo $(ls -d /lib/modules/*-msm8916-* | xargs -n 1 basename)
+          sudo mkinitramfs $MKINIT_FOLDER -o ./initrd.img
 
       - name: Check compiled files
         run: |
